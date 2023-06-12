@@ -1,0 +1,49 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: TerraformInstaller@1
+  displayName: 'Terraform version'
+  inputs:
+    terraformVersion: 'latest'
+- task: TerraformTaskV4@4
+  displayName: 'Terraform init'
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
+    backendServiceArm: 'MOC Subscription--lod48093110(564262fe-f4ce-488d-90ad-03b1b7eed97b)'
+    backendAzureRmResourceGroupName: 'rg1'
+    backendAzureRmStorageAccountName: 'strprd120623'
+    backendAzureRmContainerName: 'state'
+    backendAzureRmKey: 'tfstatefile.tfstate'
+- task: TerraformTaskV4@4
+  displayName: 'Terraform Validate'
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
+    
+- task: TerraformTaskV4@4
+  displayName: 'Terraform Plan'
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
+    environmentServiceNameAzureRM: 'MOC Subscription--lod48093110(564262fe-f4ce-488d-90ad-03b1b7eed97b)'
+
+- task: TerraformTaskV4@4
+  displayName: 'Terraform apply'
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
+    environmentServiceNameAzureRM: 'MOC Subscription--lod48093110(564262fe-f4ce-488d-90ad-03b1b7eed97b)'
