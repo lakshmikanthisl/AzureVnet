@@ -5,6 +5,6 @@ variable "location" {
 
 variable "resource_group_name" {
     description = "Resource group name"
-    default = "rg1"
+    default = "rg2"
 }
 
