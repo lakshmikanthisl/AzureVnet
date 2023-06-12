@@ -19,7 +19,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Vnet'
     backendServiceArm: 'MOC Subscription--lod48093110(564262fe-f4ce-488d-90ad-03b1b7eed97b)'
     backendAzureRmResourceGroupName: 'rg1'
     backendAzureRmStorageAccountName: 'strprd120623'
@@ -30,14 +30,14 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'validate'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Vnet'
     
 - task: TerraformTaskV4@4
   displayName: 'Terraform Plan'
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Vnet'
     environmentServiceNameAzureRM: 'MOC Subscription--lod48093110(564262fe-f4ce-488d-90ad-03b1b7eed97b)'
 
 - task: TerraformTaskV4@4
@@ -45,5 +45,5 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Vnet'
     environmentServiceNameAzureRM: 'MOC Subscription--lod48093110(564262fe-f4ce-488d-90ad-03b1b7eed97b)'
